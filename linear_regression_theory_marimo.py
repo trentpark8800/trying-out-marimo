@@ -119,8 +119,8 @@ def _(X, Y, np):
     x_sample = X[sample_indices]
     y_sample = Y[sample_indices]
 
-    x_mean = np.mean(X)
-    y_mean = np.mean(Y)
+    x_mean = np.mean(x_sample)
+    y_mean = np.mean(y_sample)
 
     optimal_beta_1 = np.sum((x_sample - x_mean) * (y_sample - y_mean)) / np.sum((x_sample - x_mean) ** 2)
 
@@ -170,13 +170,9 @@ def _(ui_beta_0, ui_beta_1):
 def _(X, Y, beta_0, beta_1, go, mo, np, x_sample, y_sample):
     x_domain = np.linspace(0, 10, 100)
 
-    x_domain = np.linspace(0, 10, 100)
-
     y_hat = (x_domain * beta_1) + beta_0
 
     y_hat_known = (x_sample * beta_1) + beta_0
-
-    residuals = y_sample - y_hat_known
 
     _fig = go.Figure()
     _fig.add_trace(
@@ -218,13 +214,6 @@ def _(X, Y, beta_0, beta_1, go, mo, np, x_sample, y_sample):
     return (y_hat_known,)
 
 
-@app.cell
-def _(beta_0, beta_1):
-    print("beta_0 ", beta_0)
-    print("beta_1 ", beta_1)
-    return
-
-
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
@@ -235,8 +224,7 @@ def _(mo):
 
 @app.cell
 def _(np, y_hat_known, y_sample):
-    rss = np.sum((y_hat_known - y_sample)**2)
-    print(rss)
+    rss = np.sum((y_hat_known - y_sample) ** 2)
     return (rss,)
 
 
@@ -256,9 +244,8 @@ def _(mo):
 
 @app.cell
 def _(np, rss, x_sample):
-    rse = np.sqrt((1/(len(x_sample) - 2) )* rss)
-    print(rse)
-    return
+    rse = np.sqrt((1 / (len(x_sample) - 2)) * rss)
+    return (rse,)
 
 
 @app.cell(hide_code=True)
@@ -285,11 +272,23 @@ def _(mo):
 
 @app.cell
 def _(np, rss, y_mean, y_sample):
-    tss = np.sum((y_sample - y_mean)**2)
+    tss = np.sum((y_sample - y_mean) ** 2)
 
-    r_squared = (tss - rss)/tss
+    r_squared = (tss - rss) / tss
 
-    print(r_squared)
+    return r_squared, tss
+
+
+@app.cell(hide_code=True)
+def _(mo, r_squared, rss, rse, tss):
+    mo.md(f"""
+    ### Current model fit metrics
+
+    - **RSS** (Residual Sum of Squares): `{rss:.3f}`
+    - **TSS** (Total Sum of Squares): `{tss:.3f}`
+    - **R²** (Explained variance proportion): `{r_squared:.4f}`
+    - **RSE** (Residual Standard Error): `{rse:.3f}`
+    """)
     return
 
 
