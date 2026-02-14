@@ -12,16 +12,16 @@ def _():
 
 
 @app.cell
+def _():
+    x = 6
+    return (x,)
+
+
+@app.cell
 def _(x):
     y = 10
     print(x+y)
     return
-
-
-@app.cell
-def _():
-    x = 6
-    return (x,)
 
 
 if __name__ == "__main__":
