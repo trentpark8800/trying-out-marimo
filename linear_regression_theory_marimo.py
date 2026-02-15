@@ -48,9 +48,9 @@ def _(mo):
 @app.cell
 def _(mo, ui_epsilon_std_dev):
     mo.md(f"""
-        Slide to adjust the standard deviation of epsilon $\\epsilon$: {ui_epsilon_std_dev}
+    Slide to adjust the standard deviation of epsilon $\\epsilon$: {ui_epsilon_std_dev}
 
-        The current value is: {ui_epsilon_std_dev.value}
+    The current value is: {ui_epsilon_std_dev.value}
     """)
     return
 
@@ -145,16 +145,16 @@ def _(mo, optimal_beta_0, optimal_beta_1, ui_reset_button):
 @app.cell
 def _(mo, ui_beta_0, ui_beta_1, ui_reset_button):
     mo.md(f"""
-        Currently, $\\hat{{\\beta}}_1$ and $\\hat{{\\beta}}_0$ are set at their optimal values.
-        Try adjusting them and notice that any other value gives a higher $RSS$.
+    Currently, $\\hat{{\\beta}}_1$ and $\\hat{{\\beta}}_0$ are set at their optimal values.
+    Try adjusting them and notice that any other value gives a higher $RSS$.
 
-        Adjust $\\hat{{\\beta}}_1$: {ui_beta_1}
-        $\\hat{{\\beta}}_1 = {ui_beta_1.value}$
+    Adjust $\\hat{{\\beta}}_1$: {ui_beta_1}
+    $\\hat{{\\beta}}_1 = {ui_beta_1.value}$
 
-        Adjust $\\hat{{\\beta}}_0$: {ui_beta_0}
-        $\\hat{{\\beta}}_0 = {ui_beta_0.value}$
+    Adjust $\\hat{{\\beta}}_0$: {ui_beta_0}
+    $\\hat{{\\beta}}_0 = {ui_beta_0.value}$
 
-        {ui_reset_button}
+    {ui_reset_button}
     """)
     return
 
@@ -275,12 +275,11 @@ def _(np, rss, y_mean, y_sample):
     tss = np.sum((y_sample - y_mean) ** 2)
 
     r_squared = (tss - rss) / tss
-
     return r_squared, tss
 
 
 @app.cell(hide_code=True)
-def _(mo, r_squared, rss, rse, tss):
+def _(mo, r_squared, rse, rss, tss):
     mo.md(f"""
     ### Current model fit metrics
 
